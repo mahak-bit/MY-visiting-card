@@ -45,7 +45,7 @@ var PROFILE = {
      that is not an absolute http(s) URL. A printed card cannot reach any
      of them, so the card falls back to the pending tile instead.
      ====================================================================== */
-  siteUrl: '',
+  siteUrl: 'https://mahak-bit.github.io/MY-visiting-card/',
 
   /* --- The five link buttons, in display order --------------------------
      key   stable id, do not rename
