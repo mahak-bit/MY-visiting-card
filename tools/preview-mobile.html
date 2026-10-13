@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Mobile preview</title>
+<!--
+  ============================================================================
+  BUILD HELPER — not part of the website.
+
+  Headless Chromium on Windows refuses a window narrower than ~500px, so a
+  direct screenshot cannot show a true phone layout. An iframe gets its own
+  layout viewport, so the page inside really is laid out at 390px — the width
+  of a common phone — and the capture is honest rather than a cropped desktop
+  render.
+
+  Driven by tools/export.sh.
+  ============================================================================
+-->
+<style>
+  html, body { margin: 0; padding: 0; background: #EFEEEB; }
+  .frame {
+    display: block;
+    width: 390px;
+    height: 1880px;
+    margin: 28px auto;
+    border: 0;
+    background: #F9F8F6;
+    box-shadow: 0 2px 4px rgba(22,22,22,0.08), 0 18px 48px -18px rgba(22,22,22,0.35);
+  }
+</style>
+</head>
+<body>
+<iframe class="frame" src="../index.html" title="Landing page at 390px"></iframe>
+</body>
+</html>

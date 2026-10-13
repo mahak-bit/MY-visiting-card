@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Export face</title>
+<!--
+  ============================================================================
+  BUILD HELPER — not part of the website.
+
+  Renders ONE card face at its natural pixel size with no page chrome, so a
+  headless browser window sized to match captures the artwork 1:1. This is a
+  pixel-exact export of the canvas, not a screenshot of a scaled preview.
+
+  Driven by tools/export.sh. Query parameters:
+    face  = front | back          which side to draw
+    dpi   = 300 | 600 | ...       device pixels per inch
+    bleed = 0.125 | 0             inches of bleed per side
+    url   = <https url>           optional: override PROFILE.siteUrl, so a
+                                  preview can show a real scannable code
+                                  before the landing page is deployed
+  ============================================================================
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<style>
+  html, body { margin: 0; padding: 0; background: #FFFFFF; }
+  canvas { display: block; }
+  /* Signals readiness to the driver script. */
+  html[data-state="ready"]::after { content: ''; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<script src="../config/profile.js"></script>
+<script src="../assets/js/qr.js"></script>
+<script src="../assets/js/card-render.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  var q = new URLSearchParams(location.search);
+  var face  = q.get('face') === 'back' ? 'back' : 'front';
+  var dpi   = parseFloat(q.get('dpi'))   || 300;
+  var bleed = q.get('bleed') != null ? parseFloat(q.get('bleed')) : 0.125;
+  var override = (q.get('url') || '').trim();
+
+  var P = window.PROFILE;
+  if (override) { P = Object.assign({}, P, { siteUrl: override }); }
+
+  /* Build the QR only from a real, absolute, public http(s) URL. */
+  var qr = null;
+  var src = String(P.siteUrl || '').trim();
+  if (src && !/[\[\]]/.test(src)) {
+    try {
+      var u = new URL(src);
+      var h = u.hostname.toLowerCase();
+      var local = h === 'localhost' || /\.localhost$|\.local$/.test(h) ||
+                  /^127\.|^10\.|^192\.168\.|^169\.254\.|^172\.(1[6-9]|2\d|3[01])\./.test(h) ||
+                  h === '0.0.0.0';
+      if ((u.protocol === 'https:' || u.protocol === 'http:') && !local && h.indexOf('.') > -1) {
+        qr = window.QR.encode(src, { ecc: (P.print && P.print.qrEcc) || 'M' });
+      }
+    } catch (e) { qr = null; }
+  }
+
+  var canvas = document.getElementById('c');
+
+  function draw() {
+    var m = window.CardRender.render(canvas, face, {
+      dpi: dpi, bleed: bleed, profile: P, qr: qr
+    });
+    /* Lock the CSS box to the device pixels so the capture is 1:1. */
+    canvas.style.width  = m.widthPx + 'px';
+    canvas.style.height = m.heightPx + 'px';
+    document.title = face + ' ' + m.widthPx + 'x' + m.heightPx;
+    document.documentElement.setAttribute('data-state', 'ready');
+    document.documentElement.setAttribute('data-size', m.widthPx + 'x' + m.heightPx);
+    document.documentElement.setAttribute('data-qr', qr ? qr.text : 'pending');
+  }
+
+  /* Draw once so nothing is blank, then redraw with the real faces loaded. */
+  draw();
+
+  if (document.fonts && document.fonts.load) {
+    Promise.all(window.CardRender.requiredFonts().map(function (f) {
+      return document.fonts.load(f, 'MAHAK JAIN abcdefghijklmnopqrstuvwxyz0123456789/&·.’');
+    })).then(function () { return document.fonts.ready; })
+      .then(draw)
+      .catch(draw);
+  }
+})();
+</script>
+</body>
+</html>

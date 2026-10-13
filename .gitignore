@@ -1,0 +1,9 @@
+# Generated artwork — rebuild with: bash tools/export.sh
+dist/
+
+# OS / editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
+node_modules/

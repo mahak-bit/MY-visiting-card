@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card Studio — Mahak Jain</title>
+<meta name="description" content="Preview, verify and export both faces of the Mahak Jain visiting card at print resolution.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light">
+
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Instrument+Serif:ital@0;1&amp;display=swap">
+<link rel="stylesheet" href="../assets/css/tokens.css">
+<link rel="stylesheet" href="../assets/css/card.css">
+<!-- Dedicated print stylesheet: one card face per page, at exact size. -->
+<link rel="stylesheet" href="../assets/css/card-print.css" media="print">
+</head>
+<body>
+
+<div class="studio">
+
+  <header class="studio__head">
+    <p class="studio__eyebrow">Visiting card · 3.5 × 2 in landscape</p>
+    <h1 class="studio__title">Card Studio</h1>
+    <p class="studio__sub">
+      Both faces are drawn from <code>config/profile.js</code> at the resolution you
+      pick below — the preview, the print output and the PNG exports are the same
+      render, so nothing drifts between what you approve and what the printer receives.
+    </p>
+  </header>
+
+  <!-- ===================================================================
+       QR DESTINATION STATUS
+       The single fact that decides whether this card is printable.
+       =================================================================== -->
+  <section class="status" id="status" data-state="pending" aria-labelledby="status-label">
+    <span class="status__label" id="status-label">QR destination</span>
+    <div class="status__body">
+      <p class="status__value status__value--none" id="status-value">Checking…</p>
+      <p class="status__note" id="status-note"></p>
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       CONTROLS
+       =================================================================== -->
+  <section class="controls" aria-label="Export settings">
+
+    <div class="field">
+      <label class="field__label" for="opt-dpi">Resolution</label>
+      <select id="opt-dpi">
+        <option value="300" selected>300 DPI — print standard</option>
+        <option value="600">600 DPI — crisper small type</option>
+        <option value="150">150 DPI — screen proof</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="opt-bleed">Page size</label>
+      <select id="opt-bleed">
+        <option value="0.125" selected>3.75 × 2.25 in — with 0.125 in bleed</option>
+        <option value="0">3.50 × 2.00 in — trimmed, no bleed</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <span class="field__label">Guides</span>
+      <label class="check"><input type="checkbox" id="opt-guides" checked> Trim &amp; safe area</label>
+    </div>
+
+    <div class="field field--grow">
+      <label class="field__label" for="opt-url">Try a URL (preview only, not saved)</label>
+      <input type="url" id="opt-url" placeholder="https://your-landing-page.vercel.app" autocomplete="off" spellcheck="false">
+    </div>
+
+  </section>
+
+  <div class="actions">
+    <button class="btn btn--primary" id="btn-print" type="button">Print both faces → PDF</button>
+    <button class="btn" id="btn-front" type="button">Download front PNG</button>
+    <button class="btn" id="btn-back" type="button">Download back PNG</button>
+    <button class="btn" id="btn-qr" type="button" disabled>Download QR PNG</button>
+  </div>
+  <p class="save-status" id="save-status" role="status" aria-live="polite"></p>
+
+  <!-- ===================================================================
+       THE TWO FACES
+       =================================================================== -->
+  <div class="faces">
+
+    <section class="face" aria-labelledby="label-front">
+      <h2 class="face__label" id="label-front">
+        Front
+        <span class="face__dim" id="dim-front"></span>
+      </h2>
+      <div class="stage" id="stage-front" data-guides="on">
+        <canvas id="canvas-front" role="img"
+                aria-label="Visiting card front: Mahak Jain, AI/ML Engineer and Software Developer, AI/ML · Python · Web Applications, Building with AI shipping with code."></canvas>
+        <div class="guide guide--trim"></div>
+        <div class="guide guide--safe"></div>
+      </div>
+      <p class="legend">
+        <span><i class="i-trim"></i> Trim line — where the card is cut</span>
+        <span><i class="i-safe"></i> Safe area — keep type inside</span>
+      </p>
+    </section>
+
+    <section class="face" aria-labelledby="label-back">
+      <h2 class="face__label" id="label-back">
+        Back
+        <span class="face__dim" id="dim-back"></span>
+      </h2>
+      <div class="stage" id="stage-back" data-guides="on">
+        <canvas id="canvas-back" role="img"
+                aria-label="Visiting card back: Let's connect. Scan to explore my work. QR code and github.com/mahak-bit."></canvas>
+        <div class="guide guide--trim"></div>
+        <div class="guide guide--safe"></div>
+      </div>
+      <p class="legend">
+        <span><i class="i-trim"></i> Trim line — where the card is cut</span>
+        <span><i class="i-safe"></i> Safe area — keep type inside</span>
+      </p>
+    </section>
+
+  </div>
+
+  <!-- ===================================================================
+       QR SPECIFICATION — measured from what was actually drawn
+       =================================================================== -->
+  <section class="spec" aria-labelledby="spec-title">
+    <h2 class="spec__title" id="spec-title">QR specification &amp; checks</h2>
+    <dl class="spec__grid" id="spec"></dl>
+    <p class="status__note" style="margin-top:1rem">
+      “Decode check” re-reads the pixels drawn above using the browser’s own
+      barcode detector. It is unavailable in some browsers — when it is, that is
+      reported rather than assumed. A phone scan of a printed proof is still the
+      final test before you order a run.
+    </p>
+  </section>
+
+</div>
+
+<script src="../config/profile.js"></script>
+<script src="../assets/js/qr.js"></script>
+<script src="../assets/js/card-render.js"></script>
+<script src="../assets/js/card.js"></script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+/* ============================================================================
+   card.css — screen presentation for the Card Studio.
+
+   This is the workbench chrome, deliberately quieter than the artwork it
+   frames: the cards are the only saturated objects on the page.
+   The card artwork itself is drawn on <canvas> by card-render.js.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #EFEEEB;                 /* a shade below ivory, so the card lifts */
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: var(--t-sm);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 2px; }
+
+.studio {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-4) var(--s-8);
+}
+@media (min-width: 48rem) { .studio { padding: var(--s-8) var(--s-6); } }
+
+/* --- Page head ------------------------------------------------------------ */
+
+.studio__head { margin-bottom: var(--s-6); }
+
+.studio__eyebrow {
+  margin: 0 0 var(--s-2);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--cobalt);
+}
+
+.studio__title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.studio__sub {
+  margin: var(--s-2) 0 0;
+  max-width: 54ch;
+  color: var(--ink-72);
+  font-size: var(--t-xs);
+}
+
+/* --- Status strip ---------------------------------------------------------
+   The QR destination is the one fact that decides whether this card can be
+   printed, so it is stated at the top in plain words.
+   ------------------------------------------------------------------------- */
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--s-3);
+  margin: var(--s-5) 0;
+  padding: var(--s-4);
+  background: var(--white);
+  border: 1px solid var(--ink-12);
+  border-left: 3px solid var(--ink-20);
+  border-radius: var(--radius);
+}
+.status[data-state="ready"]   { border-left-color: var(--cobalt); }
+.status[data-state="pending"] { border-left-color: #B8860B; }
+
+.status__label {
+  flex: none;
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-56);
+  padding-top: 2px;
+  min-width: 7.5rem;
+}
+
+.status__body { flex: 1 1 18rem; min-width: 0; }
+
+.status__value {
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: var(--t-xs);
+  word-break: break-all;
+  color: var(--ink);
+}
+.status__value--none { font-family: var(--sans); color: #8A6D0B; font-weight: 500; }
+
+.status__note { margin: var(--s-2) 0 0; font-size: var(--t-micro); color: var(--ink-56); }
+.status__note code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--ink);
+}
+
+/* --- Controls ------------------------------------------------------------- */
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  align-items: flex-end;
+  margin-bottom: var(--s-6);
+  padding: var(--s-4);
+  background: var(--white);
+  border: 1px solid var(--ink-12);
+  border-radius: var(--radius);
+}
+
+.field { display: flex; flex-direction: column; gap: var(--s-1); }
+
+.field__label {
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: var(--track-wide);
+  text-transform: uppercase;
+  color: var(--ink-56);
+}
+
+.field select,
+.field input[type="url"] {
+  font: inherit;
+  font-size: var(--t-xs);
+  padding: var(--s-2) var(--s-3);
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--ink-20);
+  border-radius: var(--radius);
+  min-height: 2.25rem;
+}
+.field input[type="url"] { min-width: 18rem; flex: 1; }
+
+.field--grow { flex: 1 1 20rem; }
+
+.check { display: flex; align-items: center; gap: var(--s-2); font-size: var(--t-xs); }
+
+.btn {
+  font: inherit;
+  font-size: var(--t-xs);
+  font-weight: 500;
+  min-height: 2.25rem;
+  padding: var(--s-2) var(--s-4);
+  background: var(--white);
+  color: var(--ink);
+  border: 1px solid var(--ink-20);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color var(--fast) var(--ease), background-color var(--fast) var(--ease);
+}
+.btn:hover { border-color: var(--ink); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn--primary { background: var(--ink); border-color: var(--ink); color: var(--ivory); }
+.btn--primary:hover { background: #000; border-color: #000; }
+
+.actions { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-bottom: var(--s-3); }
+
+.save-status {
+  min-height: 1.4em;
+  margin: 0 0 var(--s-6);
+  font-size: var(--t-micro);
+  color: var(--ink-56);
+}
+.save-status[data-tone="error"] { color: #A3341F; }
+.save-status[data-tone="ok"]    { color: var(--cobalt); }
+
+/* --- Card stage ----------------------------------------------------------- */
+
+.faces { display: flex; flex-direction: column; gap: var(--s-6); }
+@media (min-width: 56rem) { .faces { flex-direction: row; } }
+
+.face { flex: 1; min-width: 0; }
+
+.face__label {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-56);
+}
+.face__dim {
+  margin-left: auto;
+  font-weight: 500;
+  letter-spacing: var(--track-wide);
+  color: var(--ink-40);
+  font-variant-numeric: tabular-nums;
+  text-transform: none;
+}
+
+/* The stage holds the canvas at true physical proportions. */
+.stage {
+  position: relative;
+  width: 100%;
+  max-width: var(--print-w, 3.75in);
+  aspect-ratio: var(--card-ratio, 1.6667);
+  box-shadow: 0 1px 2px rgba(22,22,22,0.10), 0 10px 28px -12px rgba(22,22,22,0.28);
+}
+
+.stage canvas { display: block; width: 100%; height: 100%; }
+
+/* Guides sit over the canvas and are never exported or printed. */
+.guide {
+  position: absolute;
+  pointer-events: none;
+  inset: var(--trim-y) var(--trim-x);
+}
+.guide--trim { outline: 1px dashed rgba(0,47,167,0.55); }
+.guide--safe {
+  inset: var(--safe-y) var(--safe-x);
+  outline: 1px dotted rgba(163,52,31,0.55);
+}
+.stage[data-guides="off"] .guide { display: none; }
+
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+  font-size: var(--t-micro);
+  color: var(--ink-56);
+}
+.legend span { display: flex; align-items: center; gap: var(--s-2); }
+.legend i { width: 14px; height: 0; border-top-width: 1px; border-top-style: dashed; }
+.legend .i-trim { border-top-color: rgba(0,47,167,0.8); }
+.legend .i-safe { border-top-color: rgba(163,52,31,0.8); border-top-style: dotted; }
+
+/* --- QR detail panel ------------------------------------------------------ */
+
+.spec {
+  margin-top: var(--s-7);
+  padding: var(--s-5);
+  background: var(--white);
+  border: 1px solid var(--ink-12);
+  border-radius: var(--radius);
+}
+
+.spec__title {
+  margin: 0 0 var(--s-4);
+  font-size: var(--t-micro);
+  font-weight: 600;
+  letter-spacing: var(--track-caps);
+  text-transform: uppercase;
+  color: var(--ink-56);
+}
+
+.spec__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  margin: 0;
+}
+@media (min-width: 34rem) { .spec__grid { grid-template-columns: 1fr 1fr; column-gap: var(--s-6); } }
+
+.spec__row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  padding: var(--s-2) 0;
+  border-bottom: 1px solid var(--ink-06);
+  font-size: var(--t-xs);
+}
+.spec__row dt { color: var(--ink-56); margin: 0; }
+.spec__row dd {
+  margin: 0 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+  text-align: right;
+}
+.spec__row dd[data-flag="warn"] { color: #A3341F; }
+.spec__row dd[data-flag="ok"]   { color: var(--cobalt); }
+
+/* --- Print-only wrapper is hidden on screen ------------------------------- */
+.print-only { display: none; }

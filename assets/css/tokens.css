@@ -1,0 +1,69 @@
+/* ============================================================================
+   BRAND TOKENS — the single place every colour, face and measure is defined.
+   Shared by the landing page and both visiting-card faces.
+
+   SINGLE-THEME BY DESIGN. This is a printed-identity system: the ivory ground
+   and near-black type are the brand, exactly as they are on the card. The page
+   therefore commits to one visual world rather than inverting for dark mode —
+   every colour is painted explicitly so the page holds on any host ground.
+   (Cobalt on near-black measures 1.7:1, far below the accessible floor, so a
+   dark inversion could not keep the accent without leaving the palette.)
+   ========================================================================== */
+
+:root {
+  color-scheme: light;
+
+  /* --- Palette: the only four colours in the system -------------------- */
+  --ivory:   #F9F8F6;   /* warm ivory  — primary ground              */
+  --ink:     #161616;   /* near-black  — all primary type            */
+  --cobalt:  #002FA7;   /* electric cobalt — accent, used sparingly  */
+  --white:   #FFFFFF;   /* pure white  — surfaces, QR field          */
+
+  /* --- Tints derived from the palette (never a new hue) ---------------- */
+  --ink-72:  rgba(22, 22, 22, 0.72);
+  --ink-56:  rgba(22, 22, 22, 0.56);
+  --ink-40:  rgba(22, 22, 22, 0.40);
+  --ink-20:  rgba(22, 22, 22, 0.20);
+  --ink-12:  rgba(22, 22, 22, 0.12);
+  --ink-06:  rgba(22, 22, 22, 0.06);
+  --cobalt-08: rgba(0, 47, 167, 0.08);
+
+  /* --- Typography ------------------------------------------------------ */
+  --sans:  'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+           'Helvetica Neue', Arial, sans-serif;
+  --serif: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype',
+           Georgia, 'Times New Roman', serif;
+
+  --t-name:  clamp(2.125rem, 10vw, 2.875rem); /* the name — focal point  */
+  --t-h2:    0.75rem;                          /* tracked caps headings  */
+  --t-body:  1rem;
+  --t-sm:    0.875rem;
+  --t-xs:    0.8125rem;
+  --t-micro: 0.6875rem;
+
+  --track-tight: -0.025em;
+  --track-caps:   0.145em;
+  --track-wide:   0.04em;
+
+  /* --- Spacing (8px base) ---------------------------------------------- */
+  --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;
+  --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 2.75rem; --s-8: 4rem;
+
+  /* --- Geometry -------------------------------------------------------- */
+  --radius:  2px;      /* near-square: Swiss, not rounded-friendly */
+  --measure: 33rem;    /* single-column max width */
+  --rail:    3px;      /* the cobalt rail — echoes the card's left bar */
+
+  /* --- Motion (minimal by design) -------------------------------------- */
+  --ease: cubic-bezier(0.2, 0, 0.2, 1);
+  --fast: 130ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --fast: 0ms; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -1,0 +1,85 @@
+/* ============================================================================
+   card-print.css — DEDICATED PRINT STYLESHEET for the visiting card.
+   Linked with media="print", so it never affects the screen workbench.
+
+   WHAT THIS PRODUCES
+     Print this page to PDF and you get a two-page document, one card face per
+     page, each page exactly the artwork size — 3.75 x 2.25in with bleed, or
+     3.50 x 2.00in trimmed — with zero page margin and no browser headers.
+
+   The @page size is written by card.js to match the bleed currently selected,
+   because @page cannot read a CSS custom property.
+
+   BEFORE PRINTING, in the browser's print dialog:
+     - Margins:            None
+     - Scale:              100%  (never "Fit to page" — it rescales the card)
+     - Headers and footers: off
+     - Background graphics: ON   (without this the ivory and ink grounds drop out)
+   ========================================================================== */
+
+@media print {
+
+  /* Hide the entire workbench: only the two card faces should reach paper. */
+  .studio__head,
+  .status,
+  .controls,
+  .actions,
+  .save-status,
+  .legend,
+  .spec,
+  .face__label,
+  .guide,
+  .skip {
+    display: none !important;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #FFFFFF !important;
+  }
+
+  .studio {
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .faces {
+    display: block !important;
+    gap: 0 !important;
+  }
+
+  .face { margin: 0 !important; }
+
+  /* One face per page, at exact physical size. */
+  .stage {
+    position: relative !important;
+    width: var(--print-w) !important;
+    height: var(--print-h) !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    overflow: hidden !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  .face:first-child .stage {
+    break-after: page !important;
+    page-break-after: always !important;
+  }
+
+  .stage canvas {
+    display: block !important;
+    width: var(--print-w) !important;
+    height: var(--print-h) !important;
+  }
+
+  /* Keep the grounds: the card is mostly flat colour. */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}
