@@ -131,27 +131,44 @@
 
       var li = el('li', 'project' + (placeholder ? ' project--placeholder' : ''));
 
+      /* Screenshot of the live site, when one is supplied. Dimensions are set
+         so the card reserves its space before the image arrives — no reflow. */
+      if (p.image && !isPlaceholder(p.image)) {
+        var img = document.createElement('img');
+        img.className = 'project__shot';
+        img.src = p.image;
+        img.alt = p.imageAlt || ('Screenshot of the ' + p.title + ' website');
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.width = 1000;
+        img.height = 625;
+        li.appendChild(img);
+      }
+
+      var body = el('div', 'project__body');
+
       var head = el('div', 'project__head');
       head.appendChild(el('h3', 'project__title', p.title));
       if (p.year) { head.appendChild(el('span', 'project__year', p.year)); }
-      li.appendChild(head);
+      body.appendChild(head);
 
-      if (p.summary) { li.appendChild(el('p', 'project__summary', p.summary)); }
+      if (p.summary) { body.appendChild(el('p', 'project__summary', p.summary)); }
 
       if (Array.isArray(p.stack) && p.stack.length) {
         var ul = el('ul', 'project__stack');
         p.stack.forEach(function (s) { ul.appendChild(el('li', 'tag', s)); });
-        li.appendChild(ul);
+        body.appendChild(ul);
       }
 
       if (typeof p.url === 'string' && p.url.trim() && !isPlaceholder(p.url)) {
-        var a = el('a', 'project__link', 'View project ↗');
+        var a = el('a', 'project__link', 'Visit live site ↗');
         a.href = p.url.trim();
         a.target = '_blank';
         a.rel = 'noopener noreferrer';
-        li.appendChild(a);
+        body.appendChild(a);
       }
 
+      li.appendChild(body);
       list.appendChild(li);
     });
 

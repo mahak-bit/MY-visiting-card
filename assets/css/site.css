@@ -248,10 +248,26 @@ body {
 .projects { display: flex; flex-direction: column; gap: var(--s-2); list-style: none; margin: 0; padding: 0; }
 
 .project {
-  padding: var(--s-4);
   background: var(--white);
   border: 1px solid var(--ink-12);
   border-radius: var(--radius);
+  overflow: hidden;              /* keeps the screenshot inside the corners */
+}
+
+.project__body { padding: var(--s-4); }
+
+/* Screenshot of the live site. Cropped from the top so the hero stays in
+   frame at any card width, on a tinted ground so a slow load reads as a
+   placeholder rather than a hole. */
+.project__shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  background: var(--ink-06);
+  border-bottom: 1px solid var(--ink-12);
 }
 
 .project__head {

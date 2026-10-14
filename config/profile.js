@@ -110,25 +110,40 @@ var PROFILE = {
      -------------------------------------------------------------------- */
   projects: [
     {
-      title:   '[PROJECT ONE — NAME]',
-      summary: '[One or two sentences: what it does, what problem it solves, and what you built.]',
-      stack:   ['[PYTHON]', '[LIBRARY]', '[INTERFACE]'],
-      url:     '',
-      year:    '[YEAR]'
+      title:    'Zazzlers',
+      summary:  'A streetwear storefront built around a seasonal campaign — ' +
+                'collections and lookbook, product browsing, wishlist and cart, ' +
+                'with the campaign photography carrying the full-bleed hero.',
+      stack:    ['Next.js', 'React', 'Vercel'],
+      url:      'https://zazzlers.vercel.app/',
+      image:    'assets/projects/zazzlers.webp',
+      imageAlt: 'Zazzlers homepage: a full-bleed streetwear campaign photograph ' +
+                'behind the headline "Wear The Attitude".',
+      year:     ''
     },
     {
-      title:   '[PROJECT TWO — NAME]',
-      summary: '[One or two sentences: what it does, what problem it solves, and what you built.]',
-      stack:   ['[PYTHON]', '[LIBRARY]', '[INTERFACE]'],
-      url:     '',
-      year:    '[YEAR]'
+      title:    'Pawan Industries',
+      summary:  'A site for a rice milling business, told as full-screen chapters — ' +
+                'craft, products, sustainability, people and gallery — with film and ' +
+                'photography doing the explaining instead of long copy.',
+      stack:    ['Next.js', 'React', 'Vercel'],
+      url:      'https://pawan-industries-livid.vercel.app/',
+      image:    'assets/projects/pawan-industries.webp',
+      imageAlt: 'Pawan Industries site showing milling machinery behind the ' +
+                'headline "Pawan Industries — precision in every grain".',
+      year:     ''
     },
     {
-      title:   '[PROJECT THREE — NAME]',
-      summary: '[One or two sentences: what it does, what problem it solves, and what you built.]',
-      stack:   ['[PYTHON]', '[LIBRARY]', '[INTERFACE]'],
-      url:     '',
-      year:    '[YEAR]'
+      title:    'Twacha Clinic',
+      summary:  'A website for a dermatology practice in Kota — treatment information ' +
+                'across skin, hair and aesthetic care, with appointment booking and ' +
+                'FAQs, in a quiet editorial layout.',
+      stack:    ['Next.js', 'React', 'Vercel'],
+      url:      'https://twacha-clinic.vercel.app/',
+      image:    'assets/projects/twacha-clinic.webp',
+      imageAlt: 'Twacha Clinic homepage with the serif headline ' +
+                '"Healthy Skin. Expert Care. Confidence That Shows."',
+      year:     ''
     }
   ],
 
