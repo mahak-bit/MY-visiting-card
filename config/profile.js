@@ -110,18 +110,6 @@ var PROFILE = {
      -------------------------------------------------------------------- */
   projects: [
     {
-      title:    'Zazzlers',
-      summary:  'A streetwear storefront built around a seasonal campaign — ' +
-                'collections and lookbook, product browsing, wishlist and cart, ' +
-                'with the campaign photography carrying the full-bleed hero.',
-      stack:    ['Next.js', 'React', 'Vercel'],
-      url:      'https://zazzlers.vercel.app/',
-      image:    'assets/projects/zazzlers.webp',
-      imageAlt: 'Zazzlers homepage: a full-bleed streetwear campaign photograph ' +
-                'behind the headline "Wear The Attitude".',
-      year:     ''
-    },
-    {
       title:    'Pawan Industries',
       summary:  'A site for a rice milling business, told as full-screen chapters — ' +
                 'craft, products, sustainability, people and gallery — with film and ' +
@@ -130,8 +118,7 @@ var PROFILE = {
       url:      'https://pawan-industries-livid.vercel.app/',
       image:    'assets/projects/pawan-industries.webp',
       imageAlt: 'Pawan Industries site showing milling machinery behind the ' +
-                'headline "Pawan Industries — precision in every grain".',
-      year:     ''
+                'headline "Pawan Industries — precision in every grain".'
     },
     {
       title:    'Twacha Clinic',
@@ -142,8 +129,18 @@ var PROFILE = {
       url:      'https://twacha-clinic.vercel.app/',
       image:    'assets/projects/twacha-clinic.webp',
       imageAlt: 'Twacha Clinic homepage with the serif headline ' +
-                '"Healthy Skin. Expert Care. Confidence That Shows."',
-      year:     ''
+                '"Healthy Skin. Expert Care. Confidence That Shows."'
+    },
+    {
+      title:    'Zazzlers',
+      summary:  'A streetwear storefront built around a seasonal campaign — ' +
+                'collections and lookbook, product browsing, wishlist and cart, ' +
+                'with the campaign photography carrying the full-bleed hero.',
+      stack:    ['Next.js', 'React', 'Vercel'],
+      url:      'https://zazzlers.vercel.app/',
+      image:    'assets/projects/zazzlers.webp',
+      imageAlt: 'Zazzlers homepage: a full-bleed streetwear campaign photograph ' +
+                'behind the headline "Wear The Attitude".'
     }
   ],
 

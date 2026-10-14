@@ -46,6 +46,7 @@ body {
   .wrap { padding: var(--s-8) var(--s-6) var(--s-8); }
 }
 
+
 /* --- Brand mark (2x2 module grid; one square left open) ------------------ */
 
 .mark { display: block; width: 26px; height: 26px; }
@@ -370,6 +371,44 @@ body {
 .foot__handle { color: var(--ink-72); text-decoration: none; border-bottom: 1px solid var(--ink-20); }
 .foot__handle:hover { color: var(--cobalt); border-color: var(--cobalt); }
 .foot__spacer { margin-left: auto; }
+
+/* --- Wide screens -----------------------------------------------------------
+   The page is built for a phone, because that is where a scanned card opens it.
+   On a desktop that single narrow column leaves most of the screen empty, so
+   from 64rem the identity moves into its own column and stays in view while the
+   links and projects scroll beside it.
+
+   This block sits at the end of the file deliberately: it re-declares
+   properties (position, margin) that the base .hero rule above also sets, and
+   at equal specificity the later rule has to be this one.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 64rem) {
+  .wrap {
+    max-width: 66rem;
+    display: grid;
+    grid-template-columns: 21rem minmax(0, 1fr);
+    column-gap: var(--s-8);
+    align-items: start;
+    padding-top: var(--s-9);
+  }
+
+  .hero {
+    grid-column: 1;
+    grid-row: 1;
+    position: sticky;
+    top: var(--s-9);
+    margin-bottom: 0;
+  }
+
+  .hero__intro { max-width: none; }
+
+  main  { grid-column: 2; grid-row: 1; }
+  .foot { grid-column: 2; grid-row: 2; }
+
+  /* The last section already closes on its own rule. */
+  main > .section:last-of-type { margin-bottom: var(--s-6); }
+}
 
 /* --- Print: a sensible, ink-light fallback if someone prints the page ----- */
 

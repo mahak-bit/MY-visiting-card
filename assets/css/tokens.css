@@ -48,6 +48,7 @@
   /* --- Spacing (8px base) ---------------------------------------------- */
   --s-1: 0.25rem; --s-2: 0.5rem;  --s-3: 0.75rem; --s-4: 1rem;
   --s-5: 1.5rem;  --s-6: 2rem;    --s-7: 2.75rem; --s-8: 4rem;
+  --s-9: 5.5rem;
 
   /* --- Geometry -------------------------------------------------------- */
   --radius:  2px;      /* near-square: Swiss, not rounded-friendly */
