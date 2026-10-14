@@ -7,3 +7,7 @@ desktop.ini
 .DS_Store
 .vscode/
 node_modules/
+
+# scratch output from build/debug helpers
+probeout/
+.tmpview/
