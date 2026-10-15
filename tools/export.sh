@@ -113,7 +113,7 @@ face () {
 }
 
 echo
-echo "[1/4] Print exports — current config (QR shows PENDING until siteUrl is set)"
+echo "[1/5] Print exports — current config (QR encodes the live siteUrl)"
 face front 300 0.125 "300dpi-bleed"
 face back  300 0.125 "300dpi-bleed"
 face front 600 0.125 "600dpi-bleed"
@@ -122,13 +122,13 @@ face front 300 0     "300dpi-trim"
 face back  300 0     "300dpi-trim"
 
 echo
-echo "[2/4] Design preview — QR pointed at the real GitHub URL, so it scans"
+echo "[2/5] Design preview — QR pointed at the real GitHub URL, so it scans"
 SAMPLE="https%3A%2F%2Fgithub.com%2Fmahak-bit"
 face front 300 0.125 "PREVIEW-300dpi-github-qr" "$SAMPLE"
 face back  300 0.125 "PREVIEW-300dpi-github-qr" "$SAMPLE"
 
 echo
-echo "[3/4] Landing page previews"
+echo "[3/5] Landing page previews"
 # Headless Chromium on Windows refuses a window narrower than ~500px, so a
 # direct capture cannot show a true phone layout. preview-mobile.html puts the
 # page in a 390px iframe, which gets its own layout viewport.
@@ -138,7 +138,7 @@ shot "$DIST/mahak-jain-landing-page-desktop.png" 1400 1400 "$(to_url index.html)
   --force-device-scale-factor=2
 
 echo
-echo "[4/4] Print-ready PDF (two pages, one face per page, 3.75 x 2.25 in)"
+echo "[4/5] Print-ready PDF (two pages, one face per page, 3.75 x 2.25 in)"
 rm -f "$DIST/mahak-jain-card.pdf"
 "$BROWSER" "${COMMON[@]}" \
   --user-data-dir="$(new_profile)" \
@@ -148,6 +148,16 @@ rm -f "$DIST/mahak-jain-card.pdf"
   --print-to-pdf="$(win "$DIST/mahak-jain-card.pdf")" \
   "$(to_url card/card.html)" >/dev/null 2>&1
 report "$DIST/mahak-jain-card.pdf" "vector page, 300 DPI raster artwork"
+
+echo
+echo "[5/5] Standalone QR (SVG + PNG)"
+if node "$ROOT/tools/make-qr.js" >/dev/null 2>&1; then
+  for f in mahak-jain-qr.svg mahak-jain-qr-card.png mahak-jain-qr-1024.png; do
+    report "$DIST/$f" "standalone QR"
+  done
+else
+  echo "  skipped — siteUrl is not a usable public URL yet"
+fi
 
 rm -rf "$PROFILE_ROOT" 2>/dev/null || true
 
