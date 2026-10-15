@@ -121,6 +121,17 @@ var PROFILE = {
                 'headline "Pawan Industries — precision in every grain".'
     },
     {
+      title:    'Zazzlers',
+      summary:  'A streetwear storefront built around a seasonal campaign — ' +
+                'collections and lookbook, product browsing, wishlist and cart, ' +
+                'with the campaign photography carrying the full-bleed hero.',
+      stack:    ['Next.js', 'React', 'Vercel'],
+      url:      'https://zazzlers-copy.vercel.app',
+      image:    'assets/projects/zazzlers.webp',
+      imageAlt: 'Zazzlers homepage: a full-bleed streetwear campaign photograph ' +
+                'behind the headline "Wear The Attitude".'
+    },
+    {
       title:    'Twacha Clinic',
       summary:  'A website for a dermatology practice in Kota — treatment information ' +
                 'across skin, hair and aesthetic care, with appointment booking and ' +
@@ -130,17 +141,6 @@ var PROFILE = {
       image:    'assets/projects/twacha-clinic.webp',
       imageAlt: 'Twacha Clinic homepage with the serif headline ' +
                 '"Healthy Skin. Expert Care. Confidence That Shows."'
-    },
-    {
-      title:    'Zazzlers',
-      summary:  'A streetwear storefront built around a seasonal campaign — ' +
-                'collections and lookbook, product browsing, wishlist and cart, ' +
-                'with the campaign photography carrying the full-bleed hero.',
-      stack:    ['Next.js', 'React', 'Vercel'],
-      url:      'https://zazzlers.vercel.app/',
-      image:    'assets/projects/zazzlers.webp',
-      imageAlt: 'Zazzlers homepage: a full-bleed streetwear campaign photograph ' +
-                'behind the headline "Wear The Attitude".'
     }
   ],
 
